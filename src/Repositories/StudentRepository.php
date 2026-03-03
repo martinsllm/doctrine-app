@@ -15,8 +15,14 @@ class StudentRepository
 
     public function listAll()
     {
-        $studentRepository = $this->entityManager->getRepository('App\Entity\Student');
+        $studentRepository = $this->entityManager->getRepository(Student::class);
         return $studentRepository->findAll();
+    }
+
+    public function find($id)
+    {
+        $studentRepository = $this->entityManager->getRepository(Student::class);
+        return $studentRepository->find($id);
     }
 
     public function create($data)
@@ -25,6 +31,22 @@ class StudentRepository
         $this->entityManager->persist($student);
         $this->entityManager->flush();
         return $student;
+    }
+
+    public function update($id, $data)
+    {
+        $student = $this->find($id);
+        $student->setName($data['name']);
+        $this->entityManager->persist($student);
+        $this->entityManager->flush();
+        return $student;
+    }
+
+    public function delete($id)
+    {
+        $student = $this->find($id);
+        $this->entityManager->remove($student);
+        $this->entityManager->flush();
     }
 
 }

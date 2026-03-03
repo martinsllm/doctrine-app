@@ -36,17 +36,26 @@ class StudentsController
 
     public function show($params)
     {
-        var_dump($params['args']);
+        $student = $this->studentRepository->find($params['students']);
+        echo json_encode($student->toArray());
     }
 
     public function update($params)
     {
-        var_dump($params);
+        // Lê o corpo da requisição crua
+        $jsonData = file_get_contents('php://input');
+
+        // Decodifica a string JSON em um array associativo PHP
+        $data = json_decode($jsonData, true);
+
+        $student = $this->studentRepository->update($params['students'], $data);
+        echo json_encode($student->toArray());
     }
 
     public function destroy($params)
     {
-        var_dump($params);
+        $this->studentRepository->delete($params['students']);
+        echo json_encode(['success' => true]);
     }
 
 }
