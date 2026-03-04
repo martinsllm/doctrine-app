@@ -19,7 +19,7 @@ class Student
     #[Column]
     private string $name;
 
-    #[OneToMany(Phone::class, mappedBy: 'student', cascade: ['persist'])]
+    #[OneToMany(Phone::class, mappedBy: 'student', cascade: ['persist', 'remove'])]
     private Collection $phones;
 
     public function __construct(string $name)

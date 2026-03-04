@@ -14,7 +14,7 @@ class Phone
     #[Id, GeneratedValue, Column]    
     public int $id;
 
-    #[ManyToOne(targetEntity: Student::class, inversedBy: 'phones', cascade: ['persist'])]
+    #[ManyToOne(targetEntity: Student::class, inversedBy: 'phones')]
     public readonly Student $student;
 
     public function __construct(
