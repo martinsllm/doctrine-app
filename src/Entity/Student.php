@@ -6,17 +6,19 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 
 #[Entity]
 class Student
 {
-    #[Id]
-    #[GeneratedValue]
-    #[Column]
+    #[Id, Column, GeneratedValue]
     private int $id;
 
     #[Column]
     private string $name;
+
+    #[OneToMany(Phone::class, mappedBy: 'student')]
+    public readonly iterable $phones;
 
     public function __construct(string $name)
     {
