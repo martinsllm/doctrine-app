@@ -14,11 +14,15 @@ class Phone
     #[Id, GeneratedValue, Column]    
     public int $id;
 
-    #[ManyToOne(targetEntity: Student::class, inversedBy: 'phones')]
+    #[ManyToOne(targetEntity: Student::class, inversedBy: 'phones', cascade: ['persist'])]
     public readonly Student $student;
 
     public function __construct(
         #[Column(length: 13)]
         public readonly string $number
     ){}
+
+    public function setStudent(Student $student){
+        $this->student = $student;
+    }
 }

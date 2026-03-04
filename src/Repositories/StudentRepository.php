@@ -3,6 +3,7 @@
 namesPace App\Repositories;
 
 use App\Database\EntityManagerFactory;
+use App\Entity\Phone;
 use App\Entity\Student;
 
 class StudentRepository
@@ -28,6 +29,13 @@ class StudentRepository
     public function create($data)
     {
         $student = new Student($data['name']);
+
+        if($data['phone']){
+            array_map(function ($phone) use ($student) {
+                $student->addPhone(new Phone($phone));
+            }, $data['phone']);
+        }
+        
         $this->entityManager->persist($student);
         $this->entityManager->flush();
         return $student;

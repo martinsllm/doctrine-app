@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Entity\Phone;
 use App\Repositories\StudentRepository;
 
 class StudentsController
@@ -37,7 +38,14 @@ class StudentsController
     public function show($params)
     {
         $student = $this->studentRepository->find($params['students']);
-        echo json_encode($student->toArray());
+        $phones = $student->getPhones()->map(function (Phone $phone) {
+            return $phone;
+        });
+        
+        echo json_encode([
+            'student' => $student->toArray(),
+            'phone' => $phones->toArray()
+        ]);
     }
 
     public function update($params)
