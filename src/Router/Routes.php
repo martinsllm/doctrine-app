@@ -1,9 +1,17 @@
 <?php
 
 return [
-    '/students' => 'StudentsController@index',
-    '/students/create' => 'StudentsController@store',
-    '/students/[0-9]+' => 'StudentsController@show',
-    '/students/[0-9]+/update' => 'StudentsController@update',
-    '/students/[0-9]+/delete' => 'StudentsController@destroy'
+    'GET' => [
+        '/students' => 'StudentsController@index',
+        '/students/[0-9]+' => 'StudentsController@show',
+    ],
+    'POST' => [
+        '/students' => 'StudentsController@store',
+    ],
+    'PUT' => [
+        '/students/[0-9]+' => 'StudentsController@update',
+    ],
+    'DELETE' => [
+        '/students/[0-9]+' => 'StudentsController@destroy'
+    ],
 ];

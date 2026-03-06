@@ -7,18 +7,11 @@ use Exception;
 
 class Router
 {
-    function routes()
-    {
-        return require __DIR__ . '/Routes.php';
-    }
-
     function exactMatchUriInArrayRoutes($uri, $routes)
     {
-        if(array_key_exists($uri, $routes)) {
-            return [$uri => $routes[$uri]];
-        }
-
-        return [];
+        return array_key_exists($uri, $routes) ? 
+        [$uri => $routes[$uri]] : 
+        []; 
     }
 
     function regularExpressionMatchUriInArrayRoutes($uri, $routes)
@@ -59,13 +52,14 @@ class Router
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         
-        $routes = $this->routes();
+        $routes = require __DIR__ . '/Routes.php';
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-        $matchedUri = $this->exactMatchUriInArrayRoutes($uri, $routes);
+        $matchedUri = $this->exactMatchUriInArrayRoutes($uri, $routes[$requestMethod]);
         
         $params = [];
         if(empty($matchedUri)) {
-            $matchedUri = $this->regularExpressionMatchUriInArrayRoutes($uri, $routes);
+            $matchedUri = $this->regularExpressionMatchUriInArrayRoutes($uri, $routes[$requestMethod]);
             $uri = explode('/', ltrim($uri, '/'));
             $params = $this->params($uri, $matchedUri);
             $params = $this->paramsFormat($uri, $params);
