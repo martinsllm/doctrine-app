@@ -13,8 +13,8 @@ use Doctrine\ORM\Mapping\ManyToMany;
 #[Entity]
 class Course
 {
-    #[Id, GeneratedValue, Column]
-    public $id;
+    #[Id, GeneratedValue(strategy: 'AUTO'), Column]
+    public int $id;
     
     #[ManyToMany(targetEntity: Student::class, mappedBy: 'courses')]
     private Collection $students;
@@ -30,5 +30,12 @@ class Course
     public function getStudents(): Collection 
     {
         return $this->students;
+    }
+
+    public function toArray(){
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
     }
 }

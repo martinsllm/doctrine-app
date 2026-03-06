@@ -9,21 +9,21 @@ use App\Entity\Student;
 class StudentRepository
 {
     private $entityManager;
+    private $studentRepository;
     public function __construct()
     {
         $this->entityManager = EntityManagerFactory::createEntityManager();
+        $this->studentRepository = $this->entityManager->getRepository(Student::class);
     }
 
     public function listAll()
     {
-        $studentRepository = $this->entityManager->getRepository(Student::class);
-        return $studentRepository->findAll();
+        return $this->studentRepository->findAll();
     }
 
     public function find($id)
     {
-        $studentRepository = $this->entityManager->getRepository(Student::class);
-        return $studentRepository->find($id);
+        return $this->studentRepository->find($id);
     }
 
     public function create($data)
