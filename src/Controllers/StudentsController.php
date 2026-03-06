@@ -3,14 +3,17 @@
 namespace App\Controllers;
 
 use App\Entity\Phone;
+use App\Repositories\CoursesRepository;
 use App\Repositories\StudentRepository;
 
 class StudentsController
 {
     private $studentRepository;
+    private $courseRepository;
     public function __construct()
     {
         $this->studentRepository = new StudentRepository();
+        $this->courseRepository = new CoursesRepository();
     }
     
     public function index()
@@ -50,10 +53,8 @@ class StudentsController
 
     public function update($params)
     {
-        // Lê o corpo da requisição crua
         $jsonData = file_get_contents('php://input');
 
-        // Decodifica a string JSON em um array associativo PHP
         $data = json_decode($jsonData, true);
 
         $student = $this->studentRepository->update($params['students'], $data);
@@ -63,6 +64,17 @@ class StudentsController
     public function destroy($params)
     {
         $this->studentRepository->delete($params['students']);
+        echo json_encode(['success' => true]);
+    }
+
+    public function enrollInCourse()
+    {
+        $jsonData = file_get_contents('php://input');
+
+        $data = json_decode($jsonData, true);
+
+        $this->studentRepository->enrollInCourse($data);
+
         echo json_encode(['success' => true]);
     }
 

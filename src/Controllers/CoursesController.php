@@ -22,6 +22,12 @@ class CoursesController
         echo json_encode($data);
     }
 
+    public function show($params)
+    {
+        $course = $this->courseRepository->find($params['id']);
+        echo json_encode($course->toArray());
+    }
+
     public function store()
     {
         // Lê o corpo da requisição crua

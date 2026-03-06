@@ -3,6 +3,7 @@
 namesPace App\Repositories;
 
 use App\Database\EntityManagerFactory;
+use App\Entity\Course;
 use App\Entity\Phone;
 use App\Entity\Student;
 
@@ -54,6 +55,15 @@ class StudentRepository
     {
         $student = $this->find($id);
         $this->entityManager->remove($student);
+        $this->entityManager->flush();
+    }
+
+    public function enrollInCourse($data)
+    {
+        $student = $this->find($data['student_id']);
+        $course = $this->entityManager->getRepository(Course::class)->find($data['course_id']);
+        $student->enrollInCourse($course);
+        
         $this->entityManager->flush();
     }
 

@@ -27,15 +27,25 @@ class Course
         $this->students = new ArrayCollection();
     }
 
-    public function getStudents(): Collection 
-    {
-        return $this->students;
-    }
-
     public function toArray(){
         return [
             'id' => $this->id,
             'name' => $this->name
         ];
+    }
+
+    public function getStudents(): Collection 
+    {
+        return $this->students;
+    }
+
+    public function addStudent(Student $student)
+    {
+        if($this->students->contains($student)){
+            return;
+        }
+        
+        $this->students->add($student);
+        $student->enrollInCourse($this);
     }
 }

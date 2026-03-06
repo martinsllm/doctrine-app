@@ -67,4 +67,14 @@ class Student
     public function getCourses(): Collection {
         return $this->courses;
     }
+
+    public function enrollInCourse(Course $course)
+    {
+        if($this->courses->contains($course)){
+            return;
+        }
+        
+        $this->courses->add($course);
+        $course->addStudent($this);
+    }
 }

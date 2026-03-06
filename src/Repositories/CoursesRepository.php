@@ -20,6 +20,11 @@ class CoursesRepository
         return $this->courseRepository->findAll();
     }
 
+    public function find($id)
+    {
+        return $this->courseRepository->find($id);
+    }
+
     public function create($data)
     {
         $course = new Course($data['name']);
