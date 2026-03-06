@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Entity\Student;
 use App\Repositories\CoursesRepository;
 
 class CoursesController 
@@ -24,8 +25,16 @@ class CoursesController
 
     public function show($params)
     {
-        $course = $this->courseRepository->find($params['id']);
-        echo json_encode($course->toArray());
+        $course = $this->courseRepository->find($params['courses']);
+        
+        $students = array_map(function ($student) {
+            return $student->toArray();
+        }, $course->getStudents()->toArray());
+
+        echo json_encode([
+            'course' => $course->toArray(),
+            'students' => $students
+        ]);
     }
 
     public function store()

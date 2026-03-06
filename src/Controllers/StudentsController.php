@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Entity\Course;
 use App\Entity\Phone;
 use App\Repositories\CoursesRepository;
 use App\Repositories\StudentRepository;
@@ -44,10 +45,14 @@ class StudentsController
         $phones = $student->getPhones()->map(function (Phone $phone) {
             return $phone;
         });
+        $courses = $student->getCourses()->map(function (Course $course) {
+            return $course;
+        });
         
         echo json_encode([
             'student' => $student->toArray(),
-            'phone' => $phones->toArray()
+            'phone' => $phones->toArray(),
+            'courses' => $courses->toArray()
         ]);
     }
 
