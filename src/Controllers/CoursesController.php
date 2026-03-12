@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Entity\Student;
 use App\Repositories\CoursesRepository;
 
 class CoursesController 
