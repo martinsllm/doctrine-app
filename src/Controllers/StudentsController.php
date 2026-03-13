@@ -42,17 +42,17 @@ class StudentsController
     public function show($params)
     {
         $student = $this->studentRepository->find($params['students']);
-        $phones = $student->getPhones()->map(function (Phone $phone) {
-            return $phone;
-        });
-        $courses = $student->getCourses()->map(function (Course $course) {
-            return $course;
-        });
+        $phones = array_map(function ($phone) {
+            return $phone->toArray();
+        }, $student[0]->getPhones()->toArray());
+        $courses = array_map(function ($course) {
+            return $course->toArray();
+        }, $student[0]->getCourses()->toArray());
         
         echo json_encode([
-            'student' => $student->toArray(),
-            'phone' => $phones->toArray(),
-            'courses' => $courses->toArray()
+            'student' => $student[0]->toArray(),
+            'phones' => $phones,
+            'courses' => $courses
         ]);
     }
 

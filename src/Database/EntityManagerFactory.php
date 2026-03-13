@@ -20,7 +20,7 @@ class EntityManagerFactory
             isDevMode: true,
         );
 
-        $consoleOutput = new ConsoleOutput(ConsoleOutput::VERBOSITY_DEBUG);
+        $consoleOutput = new ConsoleOutput(\Symfony\Component\Console\Output\OutputInterface::VERBOSITY_DEBUG);
         $consoleLogger = new ConsoleLogger($consoleOutput);
         $logMiddleware = new Middleware($consoleLogger);
         $config->setMiddlewares([$logMiddleware]);

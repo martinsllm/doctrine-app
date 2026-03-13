@@ -24,7 +24,8 @@ class StudentRepository
 
     public function find($id)
     {
-        return $this->studentRepository->find($id);
+        $dql = "SELECT s, p, c FROM App\Entity\Student s LEFT JOIN s.phones p LEFT JOIN s.courses c WHERE s.id = :id";
+        return $this->entityManager->createQuery($dql)->setParameter('id', $id)->getResult();
     }
 
     public function create($data)

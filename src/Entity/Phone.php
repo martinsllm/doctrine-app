@@ -22,6 +22,13 @@ class Phone
         public readonly string $number
     ){}
 
+    public function toArray(){
+        return [
+            'id' => $this->id,
+            'number' => $this->number
+        ];
+    }
+
     public function setStudent(Student $student){
         $this->student = $student;
     }

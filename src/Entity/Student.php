@@ -20,7 +20,7 @@ class Student
     #[Column]
     private string $name;
 
-    #[OneToMany(Phone::class, mappedBy: 'student', cascade: ['persist', 'remove'])]
+    #[OneToMany(Phone::class, mappedBy: 'student', cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private Collection $phones;
 
     #[ManyToMany(Course::class, inversedBy: 'students')]
